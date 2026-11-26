@@ -1,203 +1,173 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="so">
 <head>
-<title>Voting System</title>
-
-<style>
-body {
-    font-family: Arial;
-    background: #eaf2f8;
-    margin: 0;
-    padding: 20px;
-}
-
-.container {
-    background: white;
-    max-width: 500px;
-    margin: 30px auto;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px #ccc;
-}
-
-h1 {
-    text-align: center;
-    color: #164b85;
-    font-size: 30px;
-}
-
-h3 {
-    text-align: center;
-}
-
-.candidate {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 5px;
-    border-bottom: 1px solid #ddd;
-    gap: 10px;
-}
-
-.candidate label {
-    flex: 1;
-    font-size: 16px;
-}
-
-.count {
-    background: #e3f0ff;
-    color: #0755a0;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-button {
-    background: #1877d2;
-    color: white;
-    border: none;
-    padding: 14px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 18px;
-    margin-top: 20px;
-}
-
-button:disabled {
-    background: gray;
-}
-
-.results {
-    background: #f0f7ff;
-    padding: 15px;
-    margin-top: 20px;
-    border-radius: 10px;
-    text-align: center;
-
-  .author {
-    text-align: center;
-    color: #1877d2;
-    font-size: 17px;
-    font-weight: bold;
-    margin-top: -10px;
-    margin-bottom: 30px;
-
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nidaam codbixin bulshada dhexdeeda ah">
+  <title>Nim'aan Voting System</title>
+  <style>
+    :root { color-scheme: light; --blue: #1877d2; --ink: #16324f; --muted: #5c6b7a; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 22px; font-family: Arial, sans-serif; background: #eaf2f8; color: var(--ink); }
+    .container { max-width: 540px; margin: 24px auto; padding: 24px; background: #fff; border-radius: 16px; box-shadow: 0 4px 18px #16324f22; }
+    h1 { margin: 0 0 8px; color: #164b85; text-align: center; font-size: clamp(25px, 6vw, 32px); }
+    h2, h3 { text-align: center; }
+    .author { margin: 0 0 28px; color: var(--blue); text-align: center; font-size: 16px; font-weight: 700; }
+    .intro { text-align: center; color: var(--muted); }
+    .candidate { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 8px; border-bottom: 1px solid #dce4ec; }
+    .candidate label { display: flex; align-items: center; gap: 10px; flex: 1; min-height: 32px; font-size: 17px; cursor: pointer; }
+    .candidate input { width: 20px; height: 20px; accent-color: var(--blue); }
+    .count { flex: 0 0 auto; padding: 8px 12px; border-radius: 8px; background: #e3f0ff; color: #0755a0; font-weight: 700; white-space: nowrap; }
+    button { width: 100%; margin-top: 20px; padding: 14px; border: 0; border-radius: 8px; background: var(--blue); color: #fff; font-size: 18px; font-weight: 700; cursor: pointer; }
+    button:disabled { background: #8a96a3; cursor: not-allowed; }
+    .results { margin-top: 20px; padding: 15px; border-radius: 10px; background: #f0f7ff; text-align: center; }
+    .results h3 { margin-top: 4px; }
+    #total { margin: 8px 0; }
+    #message, #status { color: var(--muted); line-height: 1.45; }
+    .error { color: #a32121 !important; }
+    .note { margin-top: 18px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  </style>
 </head>
-
 <body>
+  <main class="container">
+    <h1>VOTING SYSTEM</h1>
+    <p class="author">By Nim'aan Abdilahi Abbi</p>
+    <h3>Dooro Musharraxa Aad Taageerayso</h3>
+    <p class="intro">Hal doorasho oo keliya ayaad samayn kartaa.</p>
 
-<div class="container">
+    <div class="candidate">
+      <label><input type="radio" name="candidate" value="maxamed">Maxamed Kaahin Axmed</label>
+      <span class="count" id="count-maxamed">0 Cod</span>
+    </div>
+    <div class="candidate">
+      <label><input type="radio" name="candidate" value="xirsi">Xirsi Cali Xaaji Xasan</label>
+      <span class="count" id="count-xirsi">0 Cod</span>
+    </div>
+    <div class="candidate">
+      <label><input type="radio" name="candidate" value="maxamuud">Maxamuud Xaashi Cabdi</label>
+      <span class="count" id="count-maxamuud">0 Cod</span>
+    </div>
+    <div class="candidate">
+      <label><input type="radio" name="candidate" value="midnaba">Midnaba</label>
+      <span class="count" id="count-midnaba">0 Cod</span>
+    </div>
 
-<h1>VOTING SYSTEM</h1> 
-<p class="author">By Nim'aan Abdilahi Abbi</p>
-  
-<h3>Dooro Musharraxa Aad Taageerayso</h3>
+    <button id="voteButton" type="button">COD BIXI</button>
+    <p id="status" role="status" aria-live="polite">Nidaamka codbixinta waa la bilaabayaa…</p>
 
-<div class="candidate">
-<label>
-<input type="radio" name="candidate" value="0">
-Maxamed Kaahin Axmed
-</label>
-<span class="count" id="count0">0</span>
-</div>
+    <section class="results" aria-labelledby="resultsTitle">
+      <h3 id="resultsTitle">TIRADA CODADKA</h3>
+      <h2 id="total">Wadarta: 0</h2>
+      <p id="message">Weli cod lama dhiiban.</p>
+    </section>
+    <p class="note">Codbixintu waa hal mar akoon-browser kasta. Natiijooyinka waxaa wadaagaya dhammaan dadka boggan isticmaala.</p>
+  </main>
 
-<div class="candidate">
-<label>
-<input type="radio" name="candidate" value="1">
-Clraxmaan Maxamed Cllaahi Ciro
-</label>
-<span class="count" id="count1">0</span>
-</div>
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-<div class="candidate">
-<label>
-<input type="radio" name="candidate" value="2">
-Maxamuud Xaashi Cabdi
-</label>
-<span class="count" id="count2">0</span>
-</div>
+    // Ku beddel labada meelood xogta Supabase Project URL iyo anon/publishable key.
+    // Ha gelin service_role ama secret key boggan.
+    const SUPABASE_URL = "https://nsedltuwnhdmwxjutmii.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_g3ppKAhhoI8c5saM4TQI1g_fT-sYKUK";
+    const candidateIds = ["maxamed", "xirsi", "maxamuud", "midnaba"];
+    const clientConfigured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("GELI_") && !SUPABASE_ANON_KEY.includes("GELI_");
 
-<div class="candidate">
-<label>
-<input type="radio" name="candidate" value="3">
-Midnaba
-</label>
-<span class="count" id="count3">0</span>
-</div>
+    const button = document.getElementById("voteButton");
+    const status = document.getElementById("status");
+    const message = document.getElementById("message");
+    let supabase;
+    let voteAlreadyCast = false;
 
-<button id="voteButton" onclick="vote()">
-COD BIXI
-</button>
+    function setStatus(text, isError = false) {
+      status.textContent = text;
+      status.classList.toggle("error", isError);
+    }
 
-<div class="results">
-<h3>TIRADA CODADKA</h3>
-<h2 id="total">Wadarta: 0</h2>
-<p id="message">Weli cod lama dhiiban.</p>
-</div>
+    function showResults(rows) {
+      const counts = Object.fromEntries(candidateIds.map(id => [id, 0]));
+      for (const row of rows || []) {
+        if (candidateIds.includes(row.candidate_id)) counts[row.candidate_id] = Number(row.vote_count) || 0;
+      }
+      let total = 0;
+      for (const id of candidateIds) {
+        document.getElementById(`count-${id}`).textContent = `${counts[id]} Cod`;
+        total += counts[id];
+      }
+      document.getElementById("total").textContent = `Wadarta: ${total}`;
+      message.textContent = total === 0 ? "Weli cod lama dhiiban." : "Natiijooyinka codbixinta waa la cusboonaysiiyay.";
+    }
 
-</div>
+    async function refreshResults() {
+      const { data, error } = await supabase.rpc("get_vote_results");
+      if (error) throw error;
+      showResults(data);
+    }
 
-<script>
+    async function start() {
+      if (!clientConfigured) {
+        button.disabled = true;
+        setStatus("Si uu u shaqeeyo online, marka hore geli xogta Supabase ee faylka Voting.html.", true);
+        return;
+      }
+      supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      let { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError) throw sessionError;
+      if (!sessionData.session) {
+        const signIn = await supabase.auth.signInAnonymously();
+        if (signIn.error) throw signIn.error;
+      }
+      await refreshResults();
+      const { data: myVote, error: myVoteError } = await supabase.rpc("get_my_vote");
+      if (myVoteError) throw myVoteError;
+      if (myVote) {
+        voteAlreadyCast = true;
+        const choice = document.querySelector(`input[name="candidate"][value="${myVote}"]`);
+        if (choice) choice.checked = true;
+        document.querySelectorAll('input[name="candidate"]').forEach(input => input.disabled = true);
+        button.disabled = true;
+        message.textContent = "Waad ku mahadsan tahay codkaaga!";
+        setStatus("Aka this browser hore ayuu u codeeyay.");
+      } else {
+        setStatus("Diyaar ayaad u tahay inaad codeyso.");
+      }
+      // Natiijooyinka si toos ah ugu cusboonaysii browser-rada kale qiyaastii 10 ilbiriqsi kasta.
+      window.setInterval(() => refreshResults().catch(() => {}), 10000);
+    }
 
-let votes = [0, 0, 0, 0];
+    button.addEventListener("click", async () => {
+      if (voteAlreadyCast || !supabase) return;
+      const selected = document.querySelector('input[name="candidate"]:checked');
+      if (!selected) {
+        setStatus("Fadlan dooro musharrax.", true);
+        return;
+      }
+      button.disabled = true;
+      setStatus("Codka waa la dirayaa…");
+      const { data, error } = await supabase.rpc("cast_vote", { p_candidate_id: selected.value });
+      if (error) {
+        button.disabled = false;
+        setStatus(`Codka lama kaydin: ${error.message}`, true);
+        return;
+      }
+      if (!data) {
+        voteAlreadyCast = true;
+        document.querySelectorAll('input[name="candidate"]').forEach(input => input.disabled = true);
+        message.textContent = "Aka this browser hore ayuu u codeeyay.";
+        setStatus("Aka this browser hore ayuu u codeeyay.");
+        return;
+      }
+      voteAlreadyCast = true;
+      document.querySelectorAll('input[name="candidate"]').forEach(input => input.disabled = true);
+      message.textContent = "Waad ku mahadsan tahay codkaaga!";
+      setStatus("Codkaaga si guul leh ayaa loo kaydiyay.");
+      await refreshResults();
+    });
 
-function vote() {
-
-if (localStorage.getItem("hasVoted")) {
-alert("Waxaad hore u dhiibatay codkaaga!");
-return;
-}
-
-let selected = document.querySelector(
-'input[name="candidate"]:checked'
-);
-
-if (!selected) {
-alert("Fadlan dooro musharrax!");
-return;
-}
-
-let index = Number(selected.value);
-
-votes[index]++;
-
-localStorage.setItem("hasVoted", "true");
-
-updateResults();
-
-document.getElementById("message").innerText =
-"Waad ku mahadsan tahay codkaaga!";
-
-document.getElementById("voteButton").disabled = true;
-
-}
-
-function updateResults() {
-
-let total = 0;
-
-for (let i = 0; i < votes.length; i++) {
-
-document.getElementById("count" + i).innerText =
-votes[i] + " Cod";
-
-total += votes[i];
-
-}
-
-document.getElementById("total").innerText =
-"Wadarta: " + total;
-
-}
-
-updateResults();
-
-</script>
-
+    start().catch(error => {
+      button.disabled = true;
+      setStatus(`Nidaamka ma xirmi karo: ${error.message}`, true);
+    });
+  </script>
 </body>
 </html>
